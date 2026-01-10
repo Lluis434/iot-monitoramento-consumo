@@ -1,4 +1,5 @@
 from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, render_template
 from sqlalchemy import func
 from extensions import db
 from models import Medicao
@@ -25,3 +26,7 @@ def resumo():
         "energia_total_kwh": round(total_energia, 4),
         "custo_total": round(total_custo, 2)
     })
+
+@dashboard_bp.route('/dashboard')
+def dashboard():
+    return render_template('dashboard.html')

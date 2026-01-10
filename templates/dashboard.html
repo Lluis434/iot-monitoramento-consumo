@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard IoT - Consumo Elétrico</title>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+
+<header>📊 Monitoramento de Consumo Elétrico</header>
+
+<div class="container">
+    <div class="cards">
+        <div class="card">
+            <h3>Tensão (V)</h3>
+            <div class="valor" id="tensao">--</div>
+        </div>
+
+        <div class="card">
+            <h3>Corrente (A)</h3>
+            <div class="valor" id="corrente">--</div>
+        </div>
+
+        <div class="card">
+            <h3>Potência (W)</h3>
+            <div class="valor" id="potencia">--</div>
+        </div>
+
+        <div class="card">
+            <h3>Energia Total (kWh)</h3>
+            <div class="valor" id="energia">--</div>
+        </div>
+
+        <div class="card">
+            <h3>Custo (R$)</h3>
+            <div class="valor" id="custo">--</div>
+        </div>
+    </div>
+
+    <div id="status" class="status normal">Status do consumo</div>
+</div>
+
+<script>
+function atualizarDashboard() {
+    fetch('/api/dashboard/resumo')
+        .then(response => response.json())
+        .then(data => {
+            if (!data.ultima_medicao) return;
+
+            document.getElementById('tensao').innerText = data.ultima_medicao.tensao.toFixed(2);
+            document.getElementById('corrente').innerText = data.ultima_medicao.corrente.toFixed(2);
+            document.getElementById('potencia').innerText = data.ultima_medicao.potencia.toFixed(2);
+            document.getElementById('energia').innerText = data.energia_total_kwh.toFixed(4);
+            document.getElementById('custo').innerText = data.custo_total.toFixed(2);
+
+            const statusDiv = document.getElementById('status');
+            if (data.ultima_medicao.anomalia) {
+                statusDiv.innerText = "⚠️ ALERTA: Consumo anômalo detectado!";
+                statusDiv.className = "status alerta";
+            } else {
+                statusDiv.innerText = "✅ Consumo normal";
+                statusDiv.className = "status normal";
+            }
+        });
+}
+
+atualizarDashboard();
+setInterval(atualizarDashboard, 3000);
+</script>
+
+</body>
+</html>

@@ -24,12 +24,17 @@ def receber_consumo():
             potencia=float(data['potencia']),
             energia=float(data['energia']),
             custo=float(data['custo']),
-            anomalia=bool(data['anomalia'])
+            # Garante que strings como "false" ou "0" sejam interpretadas como False
+            anomalia=str(data['anomalia']).lower() in ['true', '1', 't', 'y', 'yes'] if isinstance(data['anomalia'], str) else bool(data['anomalia'])
         )
     except ValueError:
         return jsonify({"erro": "Tipos de dados inválidos"}), 422
 
-    db.session.add(medicao)
-    db.session.commit()
+    try:
+        db.session.add(medicao)
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"erro": "Erro ao salvar no banco de dados", "detalhes": str(e)}), 500
 
     return jsonify({"status": "recebido"}), 201
