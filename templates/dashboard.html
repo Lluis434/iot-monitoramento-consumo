@@ -41,29 +41,37 @@
 </div>
 
 <script>
-function atualizarDashboard() {
-    fetch('/api/dashboard/resumo')
-        .then(response => response.json())
-        .then(data => {
-            if (!data.ultima_medicao) return;
+async function atualizarDashboard() {
+    try {
+        const response = await fetch('/api/dashboard/resumo');
+        const data = await response.json();
 
-            document.getElementById('tensao').innerText = data.ultima_medicao.tensao.toFixed(2);
-            document.getElementById('corrente').innerText = data.ultima_medicao.corrente.toFixed(2);
-            document.getElementById('potencia').innerText = data.ultima_medicao.potencia.toFixed(2);
-            document.getElementById('energia').innerText = data.energia_total_kwh.toFixed(4);
-            document.getElementById('custo').innerText = data.custo_total.toFixed(2);
+        if (!data.ultima_medicao) return;
 
-            const statusDiv = document.getElementById('status');
-            if (data.ultima_medicao.anomalia) {
-                statusDiv.innerText = "⚠️ ALERTA: Consumo anômalo detectado!";
-                statusDiv.className = "status alerta";
-            } else {
-                statusDiv.innerText = "✅ Consumo normal";
-                statusDiv.className = "status normal";
-            }
-        });
+        // Atualiza os valores
+        document.getElementById('tensao').innerText = Number(data.ultima_medicao.tensao).toFixed(2);
+        document.getElementById('corrente').innerText = Number(data.ultima_medicao.corrente).toFixed(2);
+        document.getElementById('potencia').innerText = Number(data.ultima_medicao.potencia).toFixed(2);
+        document.getElementById('energia').innerText = Number(data.energia_total_kwh).toFixed(4);
+        document.getElementById('custo').innerText = Number(data.custo_total).toFixed(2);
+
+        // Atualiza o status
+        const statusDiv = document.getElementById('status');
+        // Considera alerta se anomalia for verdadeira
+        if (data.ultima_medicao.anomalia === true || data.ultima_medicao.anomalia === "true") {
+            statusDiv.innerText = "⚠️ ALERTA: Consumo anômalo detectado!";
+            statusDiv.className = "status alerta";
+        } else {
+            statusDiv.innerText = "✅ Consumo normal";
+            statusDiv.className = "status normal";
+        }
+
+    } catch (erro) {
+        console.error("Erro ao atualizar dashboard:", erro);
+    }
 }
 
+// Atualiza a cada 3 segundos
 atualizarDashboard();
 setInterval(atualizarDashboard, 3000);
 </script>
