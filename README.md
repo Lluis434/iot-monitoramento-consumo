@@ -1,165 +1,135 @@
-Monitoramento Inteligente de Consumo Elétrico utilizando IoT
+# Monitoramento Inteligente de Consumo Elétrico
 
-Este projeto apresenta o desenvolvimento de um sistema IoT para monitoramento inteligente de consumo elétrico, baseado em uma arquitetura em três camadas (Dispositivo, Borda e Nuvem).
-Devido às limitações do ambiente de simulação (Tinkercad), a lógica de coleta de dados e pré-processamento é simulada em um script Python, que representa o comportamento do Arduino em um cenário real.
+Sistema IoT para monitoramento de consumo elétrico baseado no conceito de **arquitetura em três camadas**, utilizando **Arduino (simulado)**, **processamento em borda** e **aplicação web em Flask** para visualização e análise dos dados.
 
-1. Visão Geral do Sistema
+---
 
-O sistema simula um ambiente de monitoramento elétrico residencial, no qual medições de tensão e corrente seriam coletadas por sensores conectados a um microcontrolador Arduino.
-Como o Tinkercad não permite requisições HTTP, um script Python é utilizado para simular:
+## Visão Geral
 
-A coleta das medições elétricas
+O projeto tem como objetivo simular um sistema de monitoramento inteligente de consumo elétrico capaz de:
+- Coletar medições de tensão e corrente
+- Calcular potência e consumo energético
+- Detectar padrões anômalos de consumo
+- Armazenar dados históricos
+- Exibir dashboards interativos via aplicação web
 
-O pré-processamento local dos dados
+Devido às limitações do **Tinkercad**, que não permite requisições HTTP, a **lógica de coleta de dados e pré-processamento também é simulada em script Python**, representando o comportamento do dispositivo e da camada de borda.
 
-O envio das informações para a aplicação web via API REST
+---
 
-2. Arquitetura do Sistema
+## Arquitetura do Sistema
 
-A arquitetura segue o modelo de IoT em três camadas:
+O sistema segue o modelo de **Arquitetura IoT em Três Camadas**:
 
-2.1 Camada de Dispositivos (Percepção)
+### 🔹 Camada de Percepção (Dispositivo)
+- Representada por um Arduino simulado
+- Sensores de tensão e corrente
+- Coleta contínua de dados elétricos
 
-Sensores simulados de tensão e corrente
+### 🔹 Camada de Borda
+- Simulada no script `gateway_simulado.py`
+- Realiza cálculos de:
+  - Potência instantânea
+  - Energia consumida
+- Identifica comportamentos anômalos
+- Envia os dados processados para a aplicação
 
-Microcontrolador Arduino UNO (simulado no Tinkercad)
+### 🔹 Camada de Nuvem
+- Aplicação web desenvolvida em Flask
+- Responsável por:
+  - Armazenamento dos dados
+  - Exibição de dashboards
+  - Histórico de alertas
+  - Análises por período (dia, semana e mês)
 
-Responsável conceitualmente pela coleta dos dados elétricos
+---
 
-2.2 Camada de Borda (Edge Computing)
+## Funcionalidades
 
-Simulada em um script Python
+- Simulação da coleta de tensão e corrente
+- Cálculo de potência e consumo energético
+- Detecção de consumo anormal
+- Registro de alertas no banco de dados
+- Dashboard de consumo em tempo real
+- Visualização de consumo por período
+- Histórico de alertas de anomalias
 
-Representa o comportamento do Arduino em um ambiente real
+---
 
-Realiza:
+## Tecnologias Utilizadas
 
-Cálculo de potência instantânea (W)
+- **Python**
+- **Flask**
+- **SQLAlchemy**
+- **SQLite**
+- **HTML, CSS e JavaScript**
 
-Cálculo de energia consumida (kWh)
+> O detalhamento das tecnologias e suas escolhas é abordado em seções específicas do trabalho.
 
-Estimativa de custo (R$)
+---
 
-Detecção de anomalias de consumo
+## Estrutura do Projeto
 
-Envia os dados processados para a camada de nuvem via HTTP
-
-⚠️ Em um cenário real, essa camada seria executada diretamente no Arduino ou em um gateway físico.
-
-2.3 Camada de Nuvem (Plataforma IoT)
-
-Aplicação web desenvolvida em Flask
-
-Persistência dos dados em banco de dados SQLite
-
-Disponibilização de dashboards e histórico de alertas
-
-3. Funcionalidades do Sistema
-
-Simulação da coleta de medições elétricas
-
-Pré-processamento local dos dados simulados
-
-Armazenamento histórico de consumo
-
-Detecção automática de anomalias
-
-Dashboards web com:
-
-Consumo instantâneo
-
-Energia acumulada
-
-Custo estimado
-
-Histórico de alertas
-
-Consumo por período (dia, semana e mês)
-
-4. Tecnologias Utilizadas
-
-Python
-
-Flask
-
-SQLAlchemy
-
-SQLite
-
-HTML5 e CSS3
-
-Arduino (simulação no Tinkercad)
-
+```text
 PROJETO_IOT/
-│
-├── app.py                     # Inicialização da aplicação Flask e registro das rotas
-├── extensions.py              # Configuração e inicialização do SQLAlchemy
-├── models.py                  # Modelos do banco de dados (Medições de consumo)
-├── requirements.txt           # Dependências do projeto
-├── README.md                  # Documentação do projeto
-├── .gitignore                 # Arquivos ignorados pelo Git
+├── app.py
+├── extensions.py
+├── models.py
+├── requirements.txt
+├── README.md
+├── .gitignore
 │
 ├── gateway/
-│   └── gateway_simulado.py    # Simula o Arduino + camada de borda
-│                              # (coleta, pré-processamento e envio via HTTP)
+│   └── gateway_simulado.py
 │
 ├── instance/
-│   └── database.db            # Banco de dados SQLite
+│   └── database.db
 │
-├── routes/                    # Rotas (Blueprints) da aplicação
-│   ├── consumo.py             # API de recebimento das medições
-│   ├── dashboard.py           # Rotas dos dashboards
-│   └── alertas.py             # Rotas e API do histórico de alertas
+├── routes/
+│   ├── consumo.py
+│   ├── dashboard.py
+│   └── alertas.py
 │
-├── templates/                 # Templates HTML
-│   ├── index.html             # Página inicial (Home)
-│   ├── dashboard.html         # Dashboard principal
-│   ├── dashboard_alertas.html # Dashboard de histórico de alertas
-│   └── consumo_periodos.html  # Dashboard de consumo por período
+├── templates/
+│   ├── index.html
+│   ├── dashboard.html
+│   ├── dashboard_alertas.html
+│   └── consumo_periodos.html
 │
-├── static/                    # Arquivos estáticos (CSS e JS)
-│   ├── index.css              # Estilo da página inicial
-│   ├── style.css              # Estilo geral dos dashboards
-│   ├── alertas.css            # Estilo do dashboard de alertas
-│   ├── periodos.css           # Estilo do consumo por período
-│   ├── home_button.css        # Botão de navegação para Home
-│   └── periodos.js            # Lógica JS do consumo por período
+├── static/
+│   ├── index.css
+│   ├── style.css
+│   ├── alertas.css
+│   ├── periodos.css
+│   ├── home_button.css
+│   └── periodos.js
 │
-└── venv/                      # Ambiente virtual Python
+└── venv/
 
-6. Execução do Sistema
-6.1 Instalação das Dependências
+🚀Execução do Projeto
+🧪Criar e ativar o ambiente virtual
+python -m venv venv
+source venv/bin/activate  # Linux/Mac
+venv\Scripts\activate     # Windows
+
+📦Instalar as dependências
 pip install -r requirements.txt
 
-6.2 Execução da Aplicação Web
+▶️Executar a aplicação Flask
 python app.py
 
-6.3 Execução do Simulador (Dispositivo + Borda)
+🔌Executar o simulador de coleta de dados
+💡Em outro terminal:
 python gateway/gateway_simulado.py
 
-6.4 Acesso à Interface Web
-http://localhost:5000
+⚠️Observações Importantes
+A comunicação entre dispositivo, borda e nuvem é realizada de forma simulada localmente.
+O script gateway_simulado.py representa:
 
-7. Observação Importante
+- A coleta de dados dos sensores
+- O pré-processamento local
+- O envio das informações para a aplicação Flask
+- O banco de dados SQLite é criado automaticamente na pasta instance.
 
-Este projeto possui caráter acadêmico e didático, com foco na demonstração dos conceitos de:
-
-Internet das Coisas (IoT)
-
-Computação em Borda
-
-Arquitetura em três camadas
-
-Monitoramento energético
-
-O arquivo gateway/gateway_simulado.py representa conceitualmente as camadas de Dispositivo e Borda, sendo responsável por:
-
-Simular sensores de tensão e corrente
-
-Executar o pré-processamento local (potência, energia, custo e anomalias)
-
-Enviar os dados para a API Flask via HTTP
-
-Essa abordagem foi adotada devido à limitação do Tinkercad, que não permite requisições HTTP diretas.
-
-A substituição do script simulador por um Arduino real exigiria apenas a adaptação do envio HTTP dos dados para a API Flask.
+🎓 Finalidade do Projeto
+Este projeto possui caráter acadêmico e educacional, sendo utilizado para fins de estudo e demonstração de conceitos de IoT em arquitetura de três camadas.
