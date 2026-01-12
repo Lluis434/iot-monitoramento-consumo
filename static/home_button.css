@@ -1,0 +1,41 @@
+/* ================= BOTÃO HOME ================= */
+
+.btn-home {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 10px 16px;
+    border-radius: 10px;
+
+    background: linear-gradient(135deg, #f1c40f, #f39c12);
+    color: #1c1c1c;
+
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+
+    box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+    cursor: pointer;
+
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease,
+        background 0.15s ease;
+
+    z-index: 1000; /* garante ficar acima de tudo */
+}
+
+.btn-home:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.45);
+}
+
+.btn-home:active {
+    transform: translateY(0);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+}

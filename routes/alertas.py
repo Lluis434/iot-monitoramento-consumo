@@ -3,10 +3,6 @@ from models import Medicao
 
 alertas_bp = Blueprint('alertas', __name__)
 
-
-# ---------------------------
-# GET - Listar todos os alertas
-# ---------------------------
 @alertas_bp.route('/api/alertas', methods=['GET'])
 def listar_alertas():
     alertas = Medicao.query.filter_by(anomalia=True) \

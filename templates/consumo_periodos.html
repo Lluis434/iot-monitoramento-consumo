@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Consumo por Período</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='periodos.css') }}">
+    <link rel="stylesheet" href="/static/home_button.css">
+
+</head>
+<body>
+
+<a href="/" class="btn-home">
+    🏠 Home
+</a>
+
+
+<header>📊 Consumo Elétrico</header>
+
+<div class="container">
+
+    <div class="cards">
+
+        <div class="card">
+            <h3>Hoje</h3>
+            <div class="valor" id="dia-energia">--</div>
+            <small>kWh</small>
+            <div class="sub">R$ <span id="dia-custo">--</span></div>
+        </div>
+
+        <div class="card">
+            <h3>Semana</h3>
+            <div class="valor" id="semana-energia">--</div>
+            <small>kWh</small>
+            <div class="sub">R$ <span id="semana-custo">--</span></div>
+        </div>
+
+        <div class="card">
+            <h3>Mês</h3>
+            <div class="valor" id="mes-energia">--</div>
+            <small>kWh</small>
+            <div class="sub">R$ <span id="mes-custo">--</span></div>
+        </div>
+
+    </div>
+
+    <div class="acoes">
+        <a href="/dashboard" class="btn">⬅ Dashboard</a>
+        <a href="/dashboard/alertas" class="btn alerta">⚠️ Histórico de Alertas</a>
+    </div>
+
+</div>
+
+<script src="{{ url_for('static', filename='periodos.js') }}"></script>
+
+</body>
+</html>

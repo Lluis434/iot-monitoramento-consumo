@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Histórico de Alertas de Consumo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='alertas.css') }}">
+    <link rel="stylesheet" href="/static/home_button.css">
+
+</head>
+<body>
+
+<a href="/" class="btn-home">
+    🏠 Home
+</a>
+
+
+<div class="container">
+
+    <a href="/dashboard" class="btn-voltar">⬅ Voltar ao Dashboard</a>
+
+    <h1>🚨 Histórico de Alertas de Consumo</h1>
+    <p>Registros de consumo elétrico classificados como anomalia pelo sistema.</p>
+
+    <table id="tabela-alertas">
+        <thead>
+            <tr>
+                <th>Data/Hora</th>
+                <th>Tensão (V)</th>
+                <th>Corrente (A)</th>
+                <th>Potência (W)</th>
+                <th>Energia (kWh)</th>
+                <th>Custo (R$)</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <p class="empty" id="msg-vazio" style="display: none;">
+        Nenhum alerta de consumo registrado.
+    </p>
+</div>
+
+<script>
+fetch('/api/alertas')
+    .then(response => response.json())
+    .then(data => {
+        const tbody = document.querySelector('#tabela-alertas tbody');
+        const msgVazio = document.getElementById('msg-vazio');
+
+        if (data.length === 0) {
+            msgVazio.style.display = 'block';
+            return;
+        }
+
+        data.forEach(alerta => {
+            const row = document.createElement('tr');
+
+            row.innerHTML = `
+                <td>${new Date(alerta.timestamp).toLocaleString()}</td>
+                <td>${alerta.tensao.toFixed(2)}</td>
+                <td>${alerta.corrente.toFixed(2)}</td>
+                <td>${alerta.potencia.toFixed(2)}</td>
+                <td>${alerta.energia.toFixed(4)}</td>
+                <td>R$ ${alerta.custo.toFixed(2)}</td>
+                <td><span class="badge-alerta">Anomalia</span></td>
+            `;
+
+            tbody.appendChild(row);
+        });
+    })
+    .catch(error => {
+        console.error('Erro ao carregar alertas:', error);
+    });
+</script>
+
+</body>
+</html>

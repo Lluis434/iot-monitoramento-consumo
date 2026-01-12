@@ -4,10 +4,23 @@
     <meta charset="UTF-8">
     <title>Dashboard IoT - Consumo Elétrico</title>
     <link rel="stylesheet" href="static/style.css">
+    <link rel="stylesheet" href="/static/home_button.css">
+
 </head>
 <body>
 
+<a href="/" class="btn-home">
+    🏠 Home
+</a>
+
+
 <header>📊 Monitoramento de Consumo Elétrico</header>
+
+<div class="nav-buttons">
+    <a href="/dashboard/alertas" class="btn-alertas">⚠️ Histórico de Alertas</a>
+    <a href="/consumo-periodos" class="btn-periodo">📆⚡ Consumo por Período</a>
+</div>
+
 
 <div class="container">
     <div class="cards">
@@ -48,16 +61,13 @@ async function atualizarDashboard() {
 
         if (!data.ultima_medicao) return;
 
-        // Atualiza os valores
         document.getElementById('tensao').innerText = Number(data.ultima_medicao.tensao).toFixed(2);
         document.getElementById('corrente').innerText = Number(data.ultima_medicao.corrente).toFixed(2);
         document.getElementById('potencia').innerText = Number(data.ultima_medicao.potencia).toFixed(2);
         document.getElementById('energia').innerText = Number(data.energia_total_kwh).toFixed(4);
         document.getElementById('custo').innerText = Number(data.custo_total).toFixed(2);
 
-        // Atualiza o status
         const statusDiv = document.getElementById('status');
-        // Considera alerta se anomalia for verdadeira
         if (data.ultima_medicao.anomalia === true || data.ultima_medicao.anomalia === "true") {
             statusDiv.innerText = "⚠️ ALERTA: Consumo anômalo detectado!";
             statusDiv.className = "status alerta";
@@ -71,7 +81,6 @@ async function atualizarDashboard() {
     }
 }
 
-// Atualiza a cada 3 segundos
 atualizarDashboard();
 setInterval(atualizarDashboard, 3000);
 </script>

@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from extensions import db
 from routes.consumo import consumo_bp
 from routes.dashboard import dashboard_bp
@@ -22,7 +22,7 @@ with app.app_context():
 
 @app.route('/')
 def index():
-    return 'API de Monitoramento de Consumo Elétrico ativa'
+     return render_template('index.html')
 
 if __name__ == '__main__':
     app.run(debug=True)

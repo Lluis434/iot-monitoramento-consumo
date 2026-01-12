@@ -24,7 +24,6 @@ def receber_consumo():
             potencia=float(data['potencia']),
             energia=float(data['energia']),
             custo=float(data['custo']),
-            # Garante que strings como "false" ou "0" sejam interpretadas como False
             anomalia=str(data['anomalia']).lower() in ['true', '1', 't', 'y', 'yes'] if isinstance(data['anomalia'], str) else bool(data['anomalia'])
         )
     except ValueError:

@@ -1,0 +1,112 @@
+/* ================= RESET E BASE ================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+    color: #ffffff;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+
+    padding: 20px;
+}
+
+/* ================= HEADER ================= */
+
+header {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 50px;
+    text-align: center;
+    text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+}
+
+/* ================= MENU PRINCIPAL ================= */
+
+.menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+/* ================= BOTÃO BASE (HERDADO) ================= */
+
+.btn-menu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 260px;
+    height: 50px;
+
+    padding: 20px;
+    border-radius: 15px;
+
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.05rem;
+
+    color: #ffffff;
+    cursor: pointer;
+    border: none;
+
+    box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease,
+        background 0.15s ease;
+}
+
+.btn-menu:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.45);
+}
+
+.btn-menu:active {
+    transform: translateY(0);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+}
+
+/* ================= VARIAÇÕES INDIVIDUAIS ================= */
+
+/* Dashboard Principal */
+.btn-dashboard {
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
+}
+
+/* Histórico de Alertas */
+.btn-alertas {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+}
+
+/* Consumo por Período */
+.btn-periodos {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+}
+
+/* ================= RESPONSIVIDADE ================= */
+
+@media (max-width: 768px) {
+    header {
+        font-size: 1.5rem;
+    }
+
+    .btn-menu {
+        min-width: 220px;
+        height: 55px;
+        font-size: 1rem;
+    }
+}
+
